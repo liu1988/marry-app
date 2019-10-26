@@ -1,0 +1,82 @@
+server:
+  port: 8088
+
+spring:
+  application:
+    name: marry-app
+  redis:
+    host: ${REDIS_HOST:127.0.0.1}
+    port: ${REDIS_PORT:6379}
+  datasource:
+    # 使用阿里的Druid连接池
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    # 填写你数据库的url、登录名、密码和数据库名
+    url: jdbc:mysql://localhost:3306/marry?useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: 123456
+    druid:
+      # 连接池的配置信息
+      # 初始化大小，最小，最大
+      initial-size: 10
+      min-idle: 5
+      maxActive: 20
+      # 配置获取连接等待超时的时间
+      maxWait: 60000
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      timeBetweenEvictionRunsMillis: 60000
+      # 配置一个连接在池中最小生存的时间，单位是毫秒
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: SELECT 1 FROM DUAL
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      # 打开PSCache，并且指定每个连接上PSCache的大小
+      poolPreparedStatements: true
+      maxPoolPreparedStatementPerConnectionSize: 20
+
+
+  #显示sql
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    #database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+
+  #开启swagger功能
+  swagger:
+    enabled: true
+    base-package: com.marry.member.controller
+    title: 会员模块API
+    description: 会员模块API详细信息
+    version: 1.0
+    contact:
+      name: liuxiaolong
+      email: 1767130051@qq.com
+      url: localhost:8088
+    termsOfServiceUrl: http://localhost:8088/
+
+  #文件上传大小控制
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 5MB
+
+#别名包扫描
+mybatis:
+  type-aliases-package: com.marry.common.domain.request
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
+
+# 分页配置
+pagehelper:
+  helper-dialect: oracle
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
+
+file:
+  path: E:/upload/
+  url: http://localhost:9090/

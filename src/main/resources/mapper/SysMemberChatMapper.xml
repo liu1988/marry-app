@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.marry.member.mapper.SysMemberChatMapper">
+
+    <select id="findSysMemberChatByPage" resultType="com.marry.common.domain.request.SysMemberChat">
+        SELECT * FROM sys_member_chat WHERE receive_user_id=#{receive_user_id} and send_user_id=#{send_user_id} order by create_time desc
+    </select>
+
+    <select id="findSysMemberChatByReceiveUserIdAndStatus" resultType="com.marry.common.domain.request.SysMemberChat">
+        SELECT * FROM sys_member_chat WHERE receive_user_id=#{receive_user_id} and status=0 order by create_time desc
+    </select>
+
+</mapper>
